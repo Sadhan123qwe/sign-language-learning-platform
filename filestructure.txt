@@ -1,0 +1,54 @@
+|-- .gitignore
+|-- .streamlit
+    |-- config.toml
+|-- asl_detection_models
+    |-- model1.p
+    |-- model2.p
+    |-- model3.p
+|-- auth_check.py
+|-- components.py
+|-- config.toml
+|-- DEPLOYMENT.md
+|-- gitignore
+|-- index.html
+|-- model.py
+|-- pages
+    |-- 1_Your_Profile_👨🏻‍💼.py
+    |-- 2_Learn Alphabets_📚.py
+    |-- 3_Learn Words_🧠.py
+    |-- 4_Quiz Time_📝.py
+    |-- 5_Practice Zone_🎓.py
+    |-- 6_Text_to_Speech_🗣️.py
+    |-- 7_Voice_to_Sign_🎤.py
+    |-- 8_Live_Sentence_Formation_📝.py
+|-- README.md
+|-- requirements(1).txt
+|-- script.js
+|-- signlingo.db
+|-- Signlingo.py
+|-- style.css
+|-- styles.py
+|-- temp_audio.mp3
+|-- temp_audio.wav
+|-- temp_sentence.txt
+|-- temp_sentence_video.avi
+|-- urls.py
+|-- video_urls.txt
+|-- _secret_auth_.json
+|-- __pycache__
+    |-- auth_check.cpython-311.pyc
+    |-- components.cpython-310.pyc
+    |-- components.cpython-311.pyc
+    |-- components.cpython-39.pyc
+    |-- model.cpython-310.pyc
+    |-- model.cpython-311.pyc
+    |-- model.cpython-314.pyc
+    |-- model.cpython-39.pyc
+    |-- styles.cpython-310.pyc
+    |-- styles.cpython-311.pyc
+    |-- styles.cpython-314.pyc
+    |-- styles.cpython-39.pyc
+    |-- urls.cpython-310.pyc
+    |-- urls.cpython-311.pyc
+    |-- urls.cpython-314.pyc
+    |-- urls.cpython-39.pyc

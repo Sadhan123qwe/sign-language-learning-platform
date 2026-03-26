@@ -1,0 +1,26 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+.Python
+env/
+venv/
+.env
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Database (ephemeral on cloud - don't commit)
+signlingo.db
+
+# Auth file with real user data - use secrets instead
+# _secret_auth_.json  ← uncomment this once you migrate to st.secrets
+
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
