@@ -1,5 +1,4 @@
 import streamlit as st
-import pyttsx3
 from gtts import gTTS
 import os
 from styles import page_setup
@@ -15,7 +14,7 @@ st.title("Text-to-Speech Conversion 🗣️")
 
 st.markdown("""
 Convert your predicted text or typed text into voice seamlessly.
-Choose between offline mode (English) or API-based integration (Tamil, Hindi).
+Supports English, Tamil, and Hindi.
 """)
 
 text_input = st.text_area("Enter text to convert to speech:", height=150)
@@ -27,28 +26,15 @@ if st.button("Generate Speech", type="primary"):
     else:
         with st.spinner("Generating audio..."):
             try:
+                lang_code = {"English": "en", "Tamil": "ta", "Hindi": "hi"}[language]
+                tts = gTTS(text=text_input, lang=lang_code)
                 temp_file = "temp_audio.mp3"
-                if language == "English":
-                    # Use pyttsx3 for English (Offline approach)
-                    engine = pyttsx3.init()
-                    engine.save_to_file(text_input, "temp_audio.wav")
-                    engine.runAndWait()
-                    
-                    if os.path.exists("temp_audio.wav"):
-                        audio_file = open("temp_audio.wav", "rb")
+                tts.save(temp_file)
+
+                if os.path.exists(temp_file):
+                    with open(temp_file, "rb") as audio_file:
                         audio_bytes = audio_file.read()
-                        st.audio(audio_bytes, format="audio/wav")
-                else:
-                    # Use gTTS for Tamil and Hindi (API approach)
-                    lang_code = 'ta' if language == "Tamil" else 'hi'
-                    tts = gTTS(text=text_input, lang=lang_code)
-                    tts.save(temp_file)
-                    
-                    if os.path.exists(temp_file):
-                        audio_file = open(temp_file, "rb")
-                        audio_bytes = audio_file.read()
-                        st.audio(audio_bytes, format="audio/mp3")
-                        
-                st.success("Audio generated successfully!")
+                    st.audio(audio_bytes, format="audio/mp3")
+                    st.success("Audio generated successfully!")
             except Exception as e:
                 st.error(f"An error occurred during speech generation: {e}")
