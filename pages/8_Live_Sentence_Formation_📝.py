@@ -29,7 +29,7 @@ target_words = st.slider("Target Number of Words to Record", min_value=1, max_va
 spell = Speller()
 
 if st.button("Start Recording Session 🔴", type="primary"):
-    cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
     
     fourcc = cv2.VideoWriter_fourcc(*'XVID')
     out_video_path = "temp_sentence_video.avi"

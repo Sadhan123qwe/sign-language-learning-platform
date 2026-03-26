@@ -18,7 +18,7 @@ c = conn.cursor()
 from auth_check import get_current_user
 current_user = get_current_user()
 
-cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 
 st.markdown(page_setup(), unsafe_allow_html=True)
 st.markdown(page_with_webcam_video(), unsafe_allow_html=True)
@@ -64,12 +64,14 @@ with col2:
 
 # creating the progress bar
 
+ret, frame = False, None
 while True and st.session_state["page"] == "wordpage":
 
     if cap.isOpened():
         ret, frame = cap.read()
     else:
         st.write("loading")
+        break
 
     if ret:
 
@@ -119,7 +121,7 @@ while True and st.session_state["page"] == "wordpage":
 
                 # Aroosh
                 st.session_state["index"] = 0
-                st.session_state["word"] = (st.session_state["word"] + 1) % NUM_WORD
+                st.session_state["word"] = (st.session_state["word"] + 1) % NUM_WORDS
                 st.balloons()
 
             video_placeholder.empty()

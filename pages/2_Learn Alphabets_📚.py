@@ -14,7 +14,7 @@ if "page" not in st.session_state or st.session_state["page"]!='learnpage':
     cv2.destroyAllWindows()
     st.session_state["page"] = 'learnpage'
 
-cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+cap = cv2.VideoCapture(0)
 
 conn = sqlite3.connect("signlingo.db")
 c = conn.cursor()

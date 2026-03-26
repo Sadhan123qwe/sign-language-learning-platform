@@ -12,7 +12,7 @@ get_current_user()
 if "page" not in st.session_state or st.session_state["page"] != "testpage":
     cv2.destroyAllWindows()
     st.session_state["page"] = "testpage"
-    cap = cv2.VideoCapture(cv2.CAP_DSHOW)
+    cap = cv2.VideoCapture(0)
 
 st.markdown(page_setup(), unsafe_allow_html=True)
 st.markdown(page_with_webcam_video(), unsafe_allow_html=True)
