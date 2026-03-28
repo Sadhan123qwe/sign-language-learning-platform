@@ -2,10 +2,10 @@ streamlit==1.34.0
 streamlit-login-auth-ui==0.2.0
 streamlit-lottie==0.0.5
 streamlit-option-menu==0.3.12
-extra-streamlit-components==0.1.71
+extra-streamlit-components==0.1.60
 streamlit-cookies-manager==0.2.0
 opencv-contrib-python-headless==4.9.0.80
-mediapipe==0.10.14
+mediapipe==0.10.9
 numpy==1.26.4
 scikit-learn==1.4.2
 Pillow==10.3.0
@@ -14,3 +14,4 @@ trycourier==4.4.0
 gTTS==2.5.1
 SpeechRecognition==3.10.3
 autocorrect==2.6.1
+protobuf==3.20.3

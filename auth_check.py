@@ -3,10 +3,10 @@ from streamlit_login_auth_ui.widgets import __login__
 import json
 
 def get_current_user():
-    # Attempt to recover the auth state via cookie if current_user is missing because of hard reload or anchor navigation.
+    # If already authenticated in this session, return immediately
     if "current_user" in st.session_state:
         return st.session_state["current_user"]
-        
+
     login_obj = __login__(
         auth_token="courier_auth_token", 
         company_name="signlingo",
@@ -16,8 +16,19 @@ def get_current_user():
     )
 
     try:
-        if login_obj.build_login_ui():
-            # Successfully found a valid cookie session and rendered the logout button
+        logged_in = login_obj.build_login_ui()
+    except Exception as e:
+        err_msg = str(e)
+        # extra-streamlit-components race condition on first load — rerun to fix
+        if "SessionInfo" in err_msg or "Bad message" in err_msg or "not initialized" in err_msg:
+            st.rerun()
+        else:
+            st.error(f"Login component error: {err_msg}")
+            st.stop()
+        return None
+
+    if logged_in:
+        try:
             fetched_cookies = login_obj.cookies
             if '__streamlit_login_signup_ui_username__' in fetched_cookies:
                 username = fetched_cookies['__streamlit_login_signup_ui_username__']
@@ -32,7 +43,7 @@ def get_current_user():
                                 email = u["email"]
                 except Exception:
                     pass
-                
+
                 st.session_state["current_user"] = {
                     "username": username,
                     "name": name,
@@ -40,9 +51,13 @@ def get_current_user():
                     "id": None
                 }
                 return st.session_state["current_user"]
-    except Exception as e:
-        print(f"Auth check hit an exception: {e}")
-            
-    # If no valid cookie, halt and display error.
+        except Exception as e:
+            err_msg = str(e)
+            if "SessionInfo" in err_msg or "Bad message" in err_msg or "not initialized" in err_msg:
+                st.rerun()
+            else:
+                print(f"Auth check hit an exception: {e}")
+
+    # Not logged in — show helpful message and stop
     st.error("Authentication required! Please click on 'Signlingo' in the sidebar or go to the Home Page to log in.")
     st.stop()

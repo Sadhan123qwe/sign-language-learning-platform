@@ -1,7 +1,10 @@
+import os
 import pickle
 import mediapipe as mp
 import cv2
 import numpy as np
+
+_BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 
 mp_hands = mp.solutions.hands
 mp_drawing = mp.solutions.drawing_utils
@@ -41,9 +44,9 @@ action_dirs = [
 ]
 
 models = [
-    pickle.load(open("./asl_detection_models/model1.p", "rb"))["model"],
-    pickle.load(open("./asl_detection_models/model2.p", "rb"))["model"],
-    pickle.load(open("./asl_detection_models/model3.p", "rb"))["model"],
+    pickle.load(open(os.path.join(_BASE_DIR, "asl_detection_models", "model1.p"), "rb"))["model"],
+    pickle.load(open(os.path.join(_BASE_DIR, "asl_detection_models", "model2.p"), "rb"))["model"],
+    pickle.load(open(os.path.join(_BASE_DIR, "asl_detection_models", "model3.p"), "rb"))["model"],
 ]
 
 thresholds = [0.75, 0.7, 0.7]
