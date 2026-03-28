@@ -13,6 +13,12 @@ if "page" not in st.session_state or st.session_state["page"] != "testpage":
     cv2.destroyAllWindows()
     st.session_state["page"] = "testpage"
     cap = cv2.VideoCapture(0)
+else:
+    cap = None
+
+if cap is None or not cap.isOpened():
+    st.warning("⚠️ No webcam detected. This feature requires a camera. If you're on a cloud/server environment, webcam access is not available.")
+    st.stop()
 
 st.markdown(page_setup(), unsafe_allow_html=True)
 st.markdown(page_with_webcam_video(), unsafe_allow_html=True)
@@ -74,14 +80,18 @@ prob = 0
 score = 0
 
 intial_time = time.time()
+ret = False
+frame = None
 while True and st.session_state["page"] == "testpage":
-    
-    
 
-    if cap is not None or cap.isOpened():
+    if cap is not None and cap.isOpened():
         ret, frame = cap.read()
     else:
-        st.write("loading")
+        break
+
+    if not ret:
+        time.sleep(0.033)
+        continue
 
     if ret:
         title_placeholder.header(

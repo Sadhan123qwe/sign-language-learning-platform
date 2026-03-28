@@ -20,6 +20,10 @@ current_user = get_current_user()
 
 cap = cv2.VideoCapture(0)
 
+if not cap.isOpened():
+    st.warning("⚠️ No webcam detected. This feature requires a camera. If you're on a cloud/server environment, webcam access is not available.")
+    st.stop()
+
 st.markdown(page_setup(), unsafe_allow_html=True)
 st.markdown(page_with_webcam_video(), unsafe_allow_html=True)
 
@@ -64,16 +68,18 @@ with col2:
 
 # creating the progress bar
 
-ret, frame = False, None
+ret = False
+frame = None
 while True and st.session_state["page"] == "wordpage":
 
-    if cap.isOpened():
+    if cap is not None and cap.isOpened():
         ret, frame = cap.read()
     else:
-        st.write("loading")
         break
 
-    if ret:
+    if not ret:
+        time.sleep(0.033)
+        continue
 
         current_word_index = st.session_state["word"]
 

@@ -16,6 +16,10 @@ if "page" not in st.session_state or st.session_state["page"]!='learnpage':
 
 cap = cv2.VideoCapture(0)
 
+if not cap.isOpened():
+    st.warning("⚠️ No webcam detected. This feature requires a camera. If you're on a cloud/server environment, webcam access is not available.")
+    st.stop()
+
 conn = sqlite3.connect("signlingo.db")
 c = conn.cursor()
 
@@ -77,12 +81,18 @@ matched_placeholder = st.empty()
 prob = 0
 progress_bar_placeholder = st.empty()
 
+ret = False
+frame = None
 while True and st.session_state.page == "learnpage":
 
-    if cap is not None or cap.isOpened():
+    if cap is not None and cap.isOpened():
         ret, frame = cap.read()
     else:
-        st.write("loading")
+        break
+
+    if not ret:
+        time.sleep(0.033)
+        continue
 
     if ret:
 
